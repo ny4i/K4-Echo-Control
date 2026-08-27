@@ -134,7 +134,9 @@ def find_config_path(explicit: Optional[str] = None) -> Optional[str]:
 
 def load(path: Optional[str] = None) -> BridgeConfig:
     """Load bridge configuration from ``path`` (or the first default that exists)."""
-    parser = configparser.ConfigParser()
+    # bridge.ini.example annotates every value with `; K4_ENV_NAME`, so inline
+    # comments have to be honoured or the shipped example will not parse.
+    parser = configparser.ConfigParser(inline_comment_prefixes=(";",))
     resolved = find_config_path(path)
 
     if path and not resolved:
