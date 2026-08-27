@@ -1,0 +1,63 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "radio control",
+      "intents": [
+        {
+          "name": "PowerOffIntent",
+          "slots": [],
+          "samples": [
+            "turn off the radio",
+            "turn the radio off",
+            "turn off the k four",
+            "turn off the rig",
+            "power off",
+            "power off the radio",
+            "power down the radio",
+            "shut down the radio",
+            "shut the radio down",
+            "put the radio in standby",
+            "put the rig in standby",
+            "standby the radio"
+          ]
+        },
+        {
+          "name": "PowerOnIntent",
+          "slots": [],
+          "samples": [
+            "turn on the radio",
+            "turn the radio on",
+            "turn on the k four",
+            "turn on the rig",
+            "power on",
+            "power on the radio",
+            "power up the radio",
+            "start the radio",
+            "wake up the radio",
+            "bring the radio up"
+          ]
+        },
+        {
+          "name": "PowerStatusIntent",
+          "slots": [],
+          "samples": [
+            "is the radio on",
+            "is the k four on",
+            "is the rig on",
+            "radio status",
+            "status",
+            "check the radio",
+            "what is the radio doing",
+            "is the radio in standby"
+          ]
+        },
+        { "name": "AMAZON.HelpIntent", "samples": [] },
+        { "name": "AMAZON.StopIntent", "samples": [] },
+        { "name": "AMAZON.CancelIntent", "samples": [] },
+        { "name": "AMAZON.NavigateHomeIntent", "samples": [] },
+        { "name": "AMAZON.FallbackIntent", "samples": [] }
+      ],
+      "types": []
+    }
+  }
+}

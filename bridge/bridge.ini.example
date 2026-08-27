@@ -1,0 +1,58 @@
+# K4 Echo Control -- home bridge configuration
+#
+# Copy to /etc/k4echo/bridge.ini (Linux) or C:\ProgramData\k4echo\bridge.ini
+# (Windows) and edit. Every value can also be supplied as an environment
+# variable, which takes precedence -- handy for keeping the secret out of the
+# file. The variable name is shown next to each setting.
+
+[bridge]
+# "iot"     -- outbound-only connection to AWS IoT Core. No router changes.
+# "webhook" -- the Lambda posts to this machine. Needs a forwarded port.
+transport = iot                     ; K4_TRANSPORT
+log_level = INFO                    ; K4_LOG_LEVEL
+
+# Refuse anything but the named commands in the allow-list. Leave this off
+# unless you specifically want the bridge to relay arbitrary CAT strings.
+allow_raw_cat = false               ; K4_ALLOW_RAW_CAT
+
+
+[radio]
+# The K4's address on your LAN. Give the radio a DHCP reservation so this
+# does not move.
+host = 192.168.1.50                 ; K4_RADIO_HOST
+port = 9200                         ; K4_RADIO_PORT
+connect_timeout = 5                 ; K4_RADIO_CONNECT_TIMEOUT
+reply_timeout = 3                   ; K4_RADIO_REPLY_TIMEOUT
+
+
+[iot]
+# Filled in for you by tools/provision_iot.sh.
+endpoint =                          ; K4_IOT_ENDPOINT
+thing_name =                        ; K4_IOT_THING_NAME
+cert =                              ; K4_IOT_CERT
+key =                               ; K4_IOT_KEY
+root_ca =                           ; K4_IOT_ROOT_CA
+# Defaults to k4echo/<thing_name>/cmd
+topic =                             ; K4_IOT_TOPIC
+# How often to poll the radio and refresh the status shadow, in seconds.
+shadow_interval = 300               ; K4_IOT_SHADOW_INTERVAL
+
+
+[webhook]
+# Only used when transport = webhook.
+bind = 0.0.0.0                      ; K4_WEBHOOK_BIND
+port = 8443                         ; K4_WEBHOOK_PORT
+path = /command                     ; K4_WEBHOOK_PATH
+
+# Shared HMAC secret; must match the Lambda's K4_BRIDGE_SECRET exactly.
+# Generate one with: python3 tools/make_secret.py
+# Prefer setting K4_BRIDGE_SECRET in the environment over writing it here.
+secret =                            ; K4_BRIDGE_SECRET
+
+# Reject requests whose timestamp is further than this many seconds from now.
+max_skew = 300                      ; K4_WEBHOOK_MAX_SKEW
+
+# Optional TLS. Leave both blank for plain HTTP -- requests are still signed,
+# so a listener cannot forge or replay one, they can only read "power_off".
+tls_cert =                          ; K4_WEBHOOK_TLS_CERT
+tls_key =                           ; K4_WEBHOOK_TLS_KEY
