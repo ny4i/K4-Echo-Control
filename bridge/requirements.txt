@@ -1,0 +1,4 @@
+# The bridge runs on the Python standard library alone when transport=webhook.
+#
+# The recommended "iot" transport needs the AWS IoT Device SDK:
+awsiotsdk>=1.21.0

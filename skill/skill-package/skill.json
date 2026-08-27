@@ -1,0 +1,48 @@
+{
+  "manifest": {
+    "manifestVersion": "1.0",
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "name": "K4 Control",
+          "summary": "Voice control for an Elecraft K4 transceiver on the local network.",
+          "description": "Sends Elecraft CAT commands to a K4 transceiver over its network control port by way of a bridge running on the operator's own home network. Say \"Alexa, tell radio control to turn off the radio\" to place the K4 in standby.\n\nThis is a private skill intended for the station owner only. It is not certified for public distribution.",
+          "examplePhrases": [
+            "Alexa, tell radio control to turn off the radio",
+            "Alexa, ask radio control to turn on the radio",
+            "Alexa, ask radio control if the radio is on"
+          ],
+          "keywords": ["ham", "radio", "amateur", "elecraft", "k4", "cat"],
+          "smallIconUri": "",
+          "largeIconUri": ""
+        }
+      },
+      "isAvailableWorldwide": false,
+      "distributionCountries": ["US"],
+      "distributionMode": "PRIVATE",
+      "testingInstructions": "Private skill. Requires a K4 Echo Control bridge running on the operator's home network.",
+      "category": "SMART_HOME"
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "REPLACE_WITH_LAMBDA_ARN"
+        },
+        "interfaces": []
+      }
+    },
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "usesPersonalInfo": false,
+      "isChildDirected": false,
+      "isExportCompliant": true,
+      "containsAds": false,
+      "locales": {
+        "en-US": {
+          "privacyPolicyUrl": "",
+          "termsOfUseUrl": ""
+        }
+      }
+    }
+  }
+}

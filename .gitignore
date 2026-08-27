@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+venv/
+.venv/
+
+# Build output
+build/
+dist/
+
+# Local configuration -- these hold secrets and site-specific addresses
+bridge.ini
+bridge.env
+*.local.ini
+
+# IoT credentials. Never commit these.
+certs/
+*.pem
+*.pem.crt
+*.pem.key
+*.private.key

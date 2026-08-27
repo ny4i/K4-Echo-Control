@@ -1,0 +1,44 @@
+# Install to /etc/systemd/system/k4-bridge.service
+#
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now k4-bridge
+#   journalctl -u k4-bridge -f
+
+[Unit]
+Description=K4 Echo Control bridge (Alexa -> Elecraft K4)
+Documentation=https://github.com/ny4i/K4-Echo-Control
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=k4bridge
+Group=k4bridge
+WorkingDirectory=/opt/k4echo
+ExecStart=/opt/k4echo/venv/bin/python -m k4echo.bridge --config /etc/k4echo/bridge.ini
+Restart=always
+RestartSec=10
+
+# Keeps the shared secret out of the config file if you prefer.
+# EnvironmentFile=-/etc/k4echo/bridge.env
+
+# The bridge only needs to open one outbound TCP connection to the radio and
+# one to AWS. Deny it everything else.
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+ReadOnlyPaths=/etc/k4echo
+
+[Install]
+WantedBy=multi-user.target

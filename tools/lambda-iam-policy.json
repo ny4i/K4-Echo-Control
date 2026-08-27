@@ -1,0 +1,27 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublishCommandsToTheBridge",
+      "Effect": "Allow",
+      "Action": "iot:Publish",
+      "Resource": "arn:aws:iot:REGION:ACCOUNT:topic/k4echo/THING_NAME/cmd"
+    },
+    {
+      "Sid": "ReadTheRadioStatusShadow",
+      "Effect": "Allow",
+      "Action": "iot:GetThingShadow",
+      "Resource": "arn:aws:iot:REGION:ACCOUNT:thing/THING_NAME"
+    },
+    {
+      "Sid": "WriteLogs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:REGION:ACCOUNT:log-group:/aws/lambda/k4-echo-control:*"
+    }
+  ]
+}
