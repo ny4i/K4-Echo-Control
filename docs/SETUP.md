@@ -79,8 +79,7 @@ port = 9200
 Verify the bridge itself can reach the radio:
 
 ```bash
-sudo -u k4bridge /opt/k4echo/venv/bin/python -m k4echo.bridge \
-    --config /etc/k4echo/bridge.ini --selftest
+sudo -u k4bridge /opt/k4echo/venv/bin/python -m k4echo.bridge --config /etc/k4echo/bridge.ini --selftest
 ```
 
 ```json
@@ -96,8 +95,7 @@ sudo -u k4bridge /opt/k4echo/venv/bin/python -m k4echo.bridge \
 You can also fire a real command from here, still with no AWS involved:
 
 ```bash
-sudo -u k4bridge /opt/k4echo/venv/bin/python -m k4echo.bridge \
-    --config /etc/k4echo/bridge.ini --send power_off
+sudo -u k4bridge /opt/k4echo/venv/bin/python -m k4echo.bridge --config /etc/k4echo/bridge.ini --send power_off
 ```
 
 ---
@@ -123,10 +121,7 @@ Copy `./certs` to the bridge machine over a trusted channel and lock it down:
 
 ```bash
 scp -r ./certs pi@192.168.1.9:/tmp/certs
-ssh pi@192.168.1.9 'sudo mkdir -p /etc/k4echo/certs \
-    && sudo mv /tmp/certs/* /etc/k4echo/certs/ \
-    && sudo chown -R root:k4bridge /etc/k4echo/certs \
-    && sudo chmod 750 /etc/k4echo/certs && sudo chmod 640 /etc/k4echo/certs/*'
+ssh pi@192.168.1.9 'sudo mkdir -p /etc/k4echo/certs && sudo mv /tmp/certs/* /etc/k4echo/certs/ && sudo chown -R root:k4bridge /etc/k4echo/certs && sudo chmod 750 /etc/k4echo/certs && sudo chmod 640 /etc/k4echo/certs/*'
 rm -rf ./certs        # the private key should not linger on your laptop
 ```
 
@@ -201,8 +196,7 @@ Start it and test **from inside the LAN first**:
 ```bash
 sudo systemctl enable --now k4-bridge
 
-K4_BRIDGE_SECRET='<the generated value>' python3 tools/post_command.py \
-    --url http://192.168.1.9:8443/command power_query
+K4_BRIDGE_SECRET='<the generated value>' python3 tools/post_command.py --url http://192.168.1.9:8443/command power_query
 ```
 
 Now forward the port on your router:
@@ -226,8 +220,7 @@ hostname in `K4_BRIDGE_URL` rather than a bare IP.
 Verify from outside your network (phone on cellular, say):
 
 ```bash
-K4_BRIDGE_SECRET='<the generated value>' python3 tools/post_command.py \
-    --url http://yourhost.example.com:8443/command power_query
+K4_BRIDGE_SECRET='<the generated value>' python3 tools/post_command.py --url http://yourhost.example.com:8443/command power_query
 ```
 
 ---
@@ -252,14 +245,7 @@ needs no AWS permissions beyond writing logs — the `AWSLambdaBasicExecutionRol
 managed policy is enough.
 
 ```bash
-aws lambda create-function \
-    --region us-east-1 \
-    --function-name k4-echo-control \
-    --runtime python3.13 \
-    --handler lambda_function.lambda_handler \
-    --role arn:aws:iam::<ACCOUNT>:role/k4-echo-control-role \
-    --zip-file fileb://dist/k4-echo-lambda.zip \
-    --timeout 8
+aws lambda create-function --region us-east-1 --function-name k4-echo-control --runtime python3.13 --handler lambda_function.lambda_handler --role arn:aws:iam::<ACCOUNT>:role/k4-echo-control-role --zip-file fileb://dist/k4-echo-lambda.zip --timeout 8
 ```
 
 An 8 second timeout matches the window Alexa gives a skill to answer.
@@ -267,25 +253,13 @@ An 8 second timeout matches the window Alexa gives a skill to answer.
 Set the environment variables. **For the IoT transport:**
 
 ```bash
-aws lambda update-function-configuration \
-    --region us-east-1 --function-name k4-echo-control \
-    --environment 'Variables={
-        K4_TRANSPORT=iot,
-        K4_IOT_THING_NAME=k4-shack-bridge,
-        K4_IOT_ENDPOINT=a1b2c3d4e5f6g7-ats.iot.us-east-1.amazonaws.com
-    }'
+aws lambda update-function-configuration --region us-east-1 --function-name k4-echo-control --environment 'Variables={K4_TRANSPORT=iot,K4_IOT_THING_NAME=k4-shack-bridge,K4_IOT_ENDPOINT=a1b2c3d4e5f6g7-ats.iot.us-east-1.amazonaws.com}'
 ```
 
 **For the webhook transport:**
 
 ```bash
-aws lambda update-function-configuration \
-    --region us-east-1 --function-name k4-echo-control \
-    --environment 'Variables={
-        K4_TRANSPORT=webhook,
-        K4_BRIDGE_URL=http://yourhost.example.com:8443/command,
-        K4_BRIDGE_SECRET=<the generated value>
-    }'
+aws lambda update-function-configuration --region us-east-1 --function-name k4-echo-control --environment 'Variables={K4_TRANSPORT=webhook,K4_BRIDGE_URL=http://yourhost.example.com:8443/command,K4_BRIDGE_SECRET=<the generated value>}'
 ```
 
 Lambda environment variables are encrypted at rest, but anyone with
@@ -336,16 +310,9 @@ Give the Lambda that skill ID, both as a trigger restriction and as an in-code
 check:
 
 ```bash
-aws lambda add-permission \
-    --region us-east-1 --function-name k4-echo-control \
-    --statement-id alexa-skill-trigger \
-    --action lambda:InvokeFunction \
-    --principal alexa-appkit.amazon.com \
-    --event-source-token amzn1.ask.skill.xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+aws lambda add-permission --region us-east-1 --function-name k4-echo-control --statement-id alexa-skill-trigger --action lambda:InvokeFunction --principal alexa-appkit.amazon.com --event-source-token amzn1.ask.skill.xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
-aws lambda update-function-configuration \
-    --region us-east-1 --function-name k4-echo-control \
-    --environment 'Variables={...existing...,K4_SKILL_ID=amzn1.ask.skill.xxxx...}'
+aws lambda update-function-configuration --region us-east-1 --function-name k4-echo-control --environment 'Variables={...existing...,K4_SKILL_ID=amzn1.ask.skill.xxxx...}'
 ```
 
 > `update-function-configuration --environment` **replaces** the whole variable
