@@ -37,6 +37,39 @@ def test_values_are_read_from_the_ini_file(tmp_path, monkeypatch):
     config.validate()
 
 
+def test_inline_comments_are_stripped(tmp_path, monkeypatch):
+    """bridge.ini.example documents each env var with a trailing `; NAME`."""
+    monkeypatch.delenv("K4_TRANSPORT", raising=False)
+    monkeypatch.delenv("K4_RADIO_HOST", raising=False)
+    monkeypatch.delenv("K4_RADIO_PORT", raising=False)
+    path = write(tmp_path, """
+        [bridge]
+        transport = iot                     ; K4_TRANSPORT
+
+        [radio]
+        host = 10.0.0.42                    ; K4_RADIO_HOST
+        port = 9200                         ; K4_RADIO_PORT
+    """)
+
+    config = load(path)
+    assert config.transport == "iot"
+    assert config.radio.host == "10.0.0.42"
+    assert config.radio.port == 9200
+
+
+def test_the_shipped_example_parses(monkeypatch):
+    """The installer copies bridge.ini.example verbatim; it must load."""
+    import os
+
+    for name in ("K4_TRANSPORT", "K4_RADIO_PORT", "K4_WEBHOOK_PATH"):
+        monkeypatch.delenv(name, raising=False)
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    config = load(os.path.join(root, "bridge", "bridge.ini.example"))
+    assert config.transport == "iot"
+    assert config.radio.port == 9200
+    assert config.webhook.path == "/command"
+
+
 def test_the_environment_overrides_the_file(tmp_path, monkeypatch):
     path = write(tmp_path, """
         [radio]

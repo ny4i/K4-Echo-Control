@@ -35,6 +35,18 @@ fi
 "${PREFIX}/venv/bin/pip" install --quiet --upgrade pip
 "${PREFIX}/venv/bin/pip" install --quiet -r "${ROOT}/bridge/requirements.txt"
 
+# Put ${PREFIX} on the venv's import path so `python -m k4echo.bridge` works
+# from any working directory, not just from ${PREFIX} itself.
+"${PREFIX}/venv/bin/python" - "${PREFIX}" <<'PYTHON'
+import os, site, sys
+
+prefix = sys.argv[1]
+target = os.path.join(site.getsitepackages()[0], "k4echo.pth")
+with open(target, "w") as handle:
+    handle.write(prefix + "\n")
+print("    registered {} on the venv path".format(prefix))
+PYTHON
+
 echo "==> setting up ${CONFDIR}"
 install -d -o root -g "${SERVICE_USER}" -m 0750 "${CONFDIR}"
 if [[ ! -f "${CONFDIR}/bridge.ini" ]]; then

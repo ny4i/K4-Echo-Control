@@ -81,12 +81,10 @@ Test each side separately:
 
 ```bash
 # from inside the LAN
-K4_BRIDGE_SECRET='...' python3 tools/post_command.py \
-    --url http://192.168.1.9:8443/command power_query
+K4_BRIDGE_SECRET='...' python3 tools/post_command.py --url http://192.168.1.9:8443/command power_query
 
 # from outside (phone hotspot)
-K4_BRIDGE_SECRET='...' python3 tools/post_command.py \
-    --url http://yourhost.example.com:8443/command power_query
+K4_BRIDGE_SECRET='...' python3 tools/post_command.py --url http://yourhost.example.com:8443/command power_query
 ```
 
 **Works inside, fails outside.** Port forward, or your ISP. Check the router
@@ -121,8 +119,7 @@ CloudWatch Logs → `/aws/lambda/k4-echo-control`.
 Read the current values back first:
 
 ```bash
-aws lambda get-function-configuration \
-    --function-name k4-echo-control --query Environment.Variables
+aws lambda get-function-configuration --function-name k4-echo-control --query Environment.Variables
 ```
 
 **`K4_SKILL_ID is not set -- any skill can invoke this function`**
