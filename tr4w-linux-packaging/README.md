@@ -16,6 +16,17 @@ cp -r tr4w-linux-packaging/packaging /path/to/TR4W-D12/
 cp -r tr4w-linux-packaging/.github   /path/to/TR4W-D12/
 ```
 
+Equivalently, from the tarball, which already has this layout at its top level:
+
+```sh
+cd /path/to/TR4W-D12 && tar xzf tr4w-linux-packaging.tar.gz
+```
+
+Either way, `tr4w-linux-packaging/README.md` — this file — does **not** travel.
+It describes the staging arrangement only. The documentation that matters is
+`packaging/linux/README.md`, which includes the list of placeholders to correct
+before the first build.
+
 `build-appimage.sh` resolves the repo root as `../..` from its own location, and
 the Dockerfile's build context is `packaging/linux`. Both break if the files move.
 

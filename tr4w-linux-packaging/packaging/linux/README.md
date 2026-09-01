@@ -14,6 +14,28 @@ Produces a single-file `TR4W-<version>-x86_64.AppImage` that users download,
 | `net.tr4w.TR4W.metainfo.xml` | AppStream metadata (also required by Flathub later). |
 | `icons/256.png` | Required. 128/64 optional. |
 
+## Before the first build
+
+Three things are placeholders and must be corrected once the port lands:
+
+1. **`PROJECT`** — set to `tr4w.lpi` as a guess. Point it at the real Lazarus
+   project file, in `.github/workflows/linux-appimage.yml` (the `PROJECT:` env
+   key) or on the command line. If `lazbuild`'s output path is unusual, set
+   `BINARY=` too.
+2. **`icons/256.png`** — required; the build aborts without it. 128 and 64 are
+   optional and installed if present.
+3. **`net.tr4w.TR4W.metainfo.xml`** — verify `<project_license>` (currently
+   `GPL-3.0-or-later`) and the homepage/bugtracker URLs. If `net.tr4w.*` is not
+   a domain you control, change the app ID in the metainfo, the `.desktop`
+   filename, and `APP_ID` in `build-appimage.sh` together — Flathub requires the
+   ID to match a domain you own, so getting it right now avoids a rename later.
+
+Also worth doing early, before committing to a widgetset: build a throwaway
+Lazarus form that logs raw key events and run it under both `qt5` and `gtk3`.
+A contest logger lives on precise keyboard delivery — ESM, function keys, CW
+abort on keypress — and that is exactly where LCL widgetset implementations
+differ most. Cheap experiment, and it settles `WIDGETSET` with evidence.
+
 ## Build
 
 Containerized (what CI does — the container is a build tool, users never see it):
