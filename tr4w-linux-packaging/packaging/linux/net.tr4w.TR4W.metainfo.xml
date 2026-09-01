@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AppStream metadata. Needed now for desktop-environment integration, and
+  required verbatim if TR4W is later submitted to Flathub -- so it is worth
+  keeping accurate. Note that Flathub requires the app ID to match a domain
+  you control; change net.tr4w.* here, in the .desktop filename and in
+  build-appimage.sh's APP_ID together if that is not the right domain.
+
+  @VERSION@ and @DATE@ are substituted by build-appimage.sh at package time.
+-->
+<component type="desktop-application">
+  <id>net.tr4w.TR4W</id>
+  <launchable type="desktop-id">net.tr4w.TR4W.desktop</launchable>
+
+  <name>TR4W</name>
+  <summary>Cross-platform amateur radio contest logger</summary>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <description>
+    <p>
+      TR4W is a contest logging program for amateur radio operators, in the
+      lineage of the TR logging family. It supports keyboard-driven contest
+      operation, CAT control of the transceiver, CW keying and DX cluster
+      connectivity.
+    </p>
+  </description>
+
+  <categories>
+    <category>Network</category>
+    <category>HamRadio</category>
+  </categories>
+
+  <url type="homepage">https://www.tr4w.net/</url>
+  <url type="bugtracker">https://github.com/ny4i/TR4W/issues</url>
+
+  <provides>
+    <binary>tr4w</binary>
+  </provides>
+
+  <releases>
+    <release version="@VERSION@" date="@DATE@"/>
+  </releases>
+
+  <content_rating type="oars-1.1"/>
+</component>

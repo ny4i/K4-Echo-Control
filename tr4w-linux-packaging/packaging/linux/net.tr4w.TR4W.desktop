@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=TR4W
+GenericName=Contest Logger
+Comment=Cross-platform amateur radio contest logger
+Exec=tr4w %f
+Icon=net.tr4w.TR4W
+Terminal=false
+Categories=Network;HamRadio;
+Keywords=amateur radio;ham radio;contest;logging;CW;CAT;
+StartupNotify=true
