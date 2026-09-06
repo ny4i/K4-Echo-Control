@@ -1,0 +1,153 @@
+<div class="k4flow">
+
+<style>
+.k4flow { max-width: 62rem; margin: 0 auto; line-height: 1.65; }
+.k4flow figure { margin: 1.5rem 0; }
+.k4flow svg { width: 100%; height: auto; display: block; }
+.k4flow figcaption { font-size: .9rem; color: #5c6773; text-align: center; margin-top: .6rem; }
+.k4flow h3 { margin: 2rem 0 .6rem; }
+.k4flow ol { padding-left: 1.3rem; }
+.k4flow ol li { margin: .6rem 0; }
+.k4flow .k4note {
+  background: #f4f7fa; border-left: 3px solid #1b6ec2;
+  padding: .9rem 1.1rem; margin: 1.4rem 0; border-radius: 0 4px 4px 0;
+}
+.k4flow code {
+  background: #eef2f6; padding: .1rem .35rem; border-radius: 3px;
+  font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .92em;
+}
+</style>
+
+<figure>
+<svg viewBox="0 0 960 620" role="img" aria-label="Message flow from an Amazon Echo out to AWS and back to a bridge that speaks CAT to the K4 on the local network." xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="k4arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-end">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#33556e"/>
+    </marker>
+  </defs>
+
+  <!-- zones -->
+  <rect x="16" y="16" width="444" height="588" rx="10" fill="#eef4f9" stroke="#c9dbe8"/>
+  <rect x="496" y="16" width="448" height="588" rx="10" fill="#f3effb" stroke="#d8cdf0"/>
+  <text x="38" y="44" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#3d5c75" letter-spacing="1.2">YOUR HOME</text>
+  <text x="518" y="44" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#5a4a86" letter-spacing="1.2">THE CLOUD</text>
+
+  <!-- divider -->
+  <line x1="478" y1="16" x2="478" y2="604" stroke="#9bb2c4" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="490" y="300" transform="rotate(-90 490 300)" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" fill="#6b8299">your router / firewall</text>
+
+  <!-- step 1 -->
+  <text x="172" y="40" font-family="system-ui, sans-serif" font-size="13.5" fill="#44607a">1 &#183; you speak</text>
+  <line x1="160" y1="44" x2="160" y2="64" stroke="#33556e" stroke-width="2" marker-end="url(#k4arrow)"/>
+
+  <!-- Echo -->
+  <rect x="60" y="70" width="200" height="64" rx="8" fill="#ffffff" stroke="#33556e" stroke-width="1.6"/>
+  <text x="160" y="99" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#16293a">Echo</text>
+  <text x="160" y="119" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" fill="#6b8299">a microphone and a speaker</text>
+
+  <!-- step 2 -->
+  <line x1="264" y1="102" x2="552" y2="102" stroke="#33556e" stroke-width="2" marker-end="url(#k4arrow)"/>
+  <text x="408" y="92" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13.5" fill="#44607a">2 &#183; your words, as audio</text>
+
+  <!-- Alexa -->
+  <rect x="560" y="70" width="240" height="64" rx="8" fill="#ffffff" stroke="#5a4a86" stroke-width="1.6"/>
+  <text x="680" y="99" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#2f2352">Alexa speech service</text>
+  <text x="680" y="119" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" fill="#7a6ba3">decides what you meant</text>
+
+  <!-- step 3 -->
+  <line x1="680" y1="138" x2="680" y2="226" stroke="#33556e" stroke-width="2" marker-end="url(#k4arrow)"/>
+  <text x="694" y="176" font-family="system-ui, sans-serif" font-size="13.5" fill="#44607a">3 &#183; intent name only</text>
+  <text x="694" y="194" font-family="ui-monospace, Menlo, monospace" font-size="12.5" fill="#6b8299">PowerOffIntent</text>
+
+  <!-- Lambda -->
+  <rect x="560" y="230" width="240" height="76" rx="8" fill="#ffffff" stroke="#5a4a86" stroke-width="1.6"/>
+  <text x="680" y="259" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#2f2352">AWS Lambda</text>
+  <text x="680" y="279" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" fill="#7a6ba3">looks the name up in a</text>
+  <text x="680" y="295" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" fill="#7a6ba3">fixed list of three commands</text>
+
+  <!-- step 4 -->
+  <line x1="680" y1="310" x2="680" y2="382" stroke="#33556e" stroke-width="2" marker-end="url(#k4arrow)"/>
+  <text x="694" y="342" font-family="system-ui, sans-serif" font-size="13.5" fill="#44607a">4 &#183; command name</text>
+  <text x="694" y="360" font-family="ui-monospace, Menlo, monospace" font-size="12.5" fill="#6b8299">power_off</text>
+
+  <!-- IoT Core -->
+  <rect x="560" y="386" width="240" height="64" rx="8" fill="#ffffff" stroke="#5a4a86" stroke-width="1.6"/>
+  <text x="680" y="415" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#2f2352">AWS IoT Core</text>
+  <text x="680" y="435" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" fill="#7a6ba3">message broker</text>
+
+  <!-- step 5 -->
+  <polyline points="556,418 160,418 160,466" fill="none" stroke="#33556e" stroke-width="2" marker-end="url(#k4arrow)"/>
+  <text x="330" y="408" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13.5" fill="#44607a">5 &#183; down the link the bridge opened</text>
+  <text x="330" y="440" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" fill="#6b8299">nothing is forwarded, nothing listens</text>
+
+  <!-- Bridge -->
+  <rect x="60" y="470" width="200" height="76" rx="8" fill="#1b6ec2" stroke="#14508f" stroke-width="1.6"/>
+  <text x="160" y="499" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff">Bridge</text>
+  <text x="160" y="518" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" fill="#cfe4f8">a Raspberry Pi on your LAN</text>
+  <text x="160" y="535" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" fill="#cfe4f8">the only thing that speaks CAT</text>
+
+  <!-- step 6 -->
+  <line x1="264" y1="508" x2="360" y2="508" stroke="#33556e" stroke-width="2" marker-end="url(#k4arrow)"/>
+  <text x="312" y="474" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13.5" fill="#44607a">6</text>
+  <text x="312" y="494" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12.5" fill="#6b8299">PS0;</text>
+  <text x="312" y="534" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#6b8299">TCP 9200</text>
+
+  <!-- K4 -->
+  <rect x="364" y="470" width="92" height="76" rx="8" fill="#0d1b2a" stroke="#0d1b2a"/>
+  <text x="410" y="505" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#ffffff">K4</text>
+  <text x="410" y="526" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#8fb3d4">your radio</text>
+</svg>
+<figcaption>The command leaves your house and comes back. The Echo and the radio never speak to each other.</figcaption>
+</figure>
+
+<h3>What actually happens</h3>
+
+<ol>
+  <li><strong>You speak.</strong> The Echo does what it always does &mdash; hears the wake word and records.</li>
+  <li><strong>The audio goes to Amazon.</strong> Exactly as it does for a timer or a weather forecast. Amazon's speech service decides which of three intents you meant: on, off, or status.</li>
+  <li><strong>Alexa calls a small function.</strong> It passes a name &mdash; <code>PowerOffIntent</code> &mdash; and nothing else. No audio and no recording ever reaches my code or your house.</li>
+  <li><strong>The function picks a command.</strong> It looks the intent up in a fixed list of three and publishes the result as a bare name: <code>power_off</code>. It does not build a CAT string, and it cannot send one.</li>
+  <li><strong>The message reaches your bridge.</strong> The bridge holds an outbound connection to AWS that it opened itself, the same way your phone stays connected for notifications. AWS pushes the command down that existing link. <strong>No port is forwarded and nothing at your house listens for inbound connections.</strong></li>
+  <li><strong>The bridge talks to the radio.</strong> Only here does CAT exist. The bridge opens a TCP socket to the K4 on port 9200, on your own LAN, and sends <code>PS0;</code>.</li>
+</ol>
+
+<h3>&ldquo;Isn't the Echo just talking to the radio?&rdquo;</h3>
+
+<p>
+No &mdash; and this surprises people, because the Echo and the radio are often sitting on the same
+network a few feet apart. An Echo cannot run your code. A custom Alexa skill executes in Amazon's
+cloud, never on the device, so there is no way to make the Echo open a socket to anything. The Echo
+is a microphone and a speaker; it has no idea the radio exists.
+</p>
+
+<p>
+So a command travels out of your house to AWS and back in again, even though the two devices are in
+the same room. That sounds wasteful, but it buys the thing that matters: the return trip arrives on
+a connection your bridge dialled out, so your router needs no port forwarding, no dynamic DNS, and
+no inbound rule of any kind.
+</p>
+
+<div class="k4note">
+  <strong>Why send a name instead of a CAT string?</strong> Because then the cloud half cannot say
+  anything the radio wasn't already going to accept. Even if someone got full control of the
+  function, the bridge only recognises three names and refuses everything else. Arbitrary CAT never
+  crosses the internet.
+</div>
+
+<h3>What if ten friends want this for their own K4s?</h3>
+
+<p>
+Every operator needs their own bridge, on their own network, talking to their own radio. That part
+can't be shared &mdash; it's the half that has to be physically near the transceiver, and it's a
+small program on a Raspberry Pi that's already doing other things in most shacks.
+</p>
+
+<p>
+The cloud half can go either way. The simple version is that each person builds their own: their own
+skill, their own function, their own credentials, and nothing of theirs touches anything of mine. The
+alternative is one shared skill that routes each request to the right person's bridge, which is less
+setup for them and more responsibility for whoever runs it &mdash; the routing table becomes the only
+thing keeping one operator's voice from reaching another operator's transmitter.
+</p>
+
+</div>
