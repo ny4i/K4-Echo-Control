@@ -286,6 +286,9 @@ that ARN.
 | `K4_BRIDGE_SECRET` | webhook | — | Shared HMAC secret |
 | `K4_BRIDGE_SECRET_ARN` | webhook | *(unset)* | Secrets Manager ARN; takes precedence |
 | `K4_BRIDGE_TIMEOUT` | webhook | `6` | Seconds to wait for the bridge |
+| `K4_MULTI_TENANT` | iot | *(off)* | Serve several operators from one skill; see [SHARED-SKILL.md](SHARED-SKILL.md) |
+| `K4_PAIRINGS_TABLE` | iot | `k4echo-pairings` | DynamoDB table, `user_id` → bridge |
+| `K4_CODES_TABLE` | iot | `k4echo-codes` | DynamoDB table, pairing code → bridge |
 
 ---
 
@@ -387,6 +390,19 @@ Assume a few dozen commands a month.
 
 The one genuinely expensive option is the one this project avoids: pinning
 Lambda's egress to a fixed IP needs a VPC NAT gateway, around **$32/month**.
+
+---
+
+## Sharing it with other operators
+
+Everything above builds a **private** skill: one skill, one Lambda, one radio.
+Anyone else who wants it has to repeat the whole thing, including creating an
+AWS account of their own.
+
+If you would rather host the cloud half for a group — so your friends install
+only a bridge and need no AWS account at all — see
+[SHARED-SKILL.md](SHARED-SKILL.md). It costs you a DynamoDB table, a wider IAM
+policy, and a clear head about the security trade involved.
 
 ---
 

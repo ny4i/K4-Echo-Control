@@ -86,6 +86,9 @@ sudo ./bridge/install-linux.sh            # or bridge\windows\install-windows.ps
 Then follow [docs/SETUP.md](docs/SETUP.md), which walks through the AWS and
 Alexa developer console steps end to end.
 
+Want to run it for a group, so your friends install only a bridge and need no
+AWS account of their own? See [docs/SHARED-SKILL.md](docs/SHARED-SKILL.md).
+
 No radio yet? `python3 tools/fake_k4.py --port 9200` stands in for one and
 prints every CAT string it receives, so you can test the whole chain first.
 
@@ -98,6 +101,7 @@ k4echo/            code shared by both halves, so they cannot drift
   radio.py           the TCP client that talks CAT to the K4
   alexa.py           Alexa request parsing and response building
   transports.py      how the Lambda reaches the bridge (Lambda side)
+  registry.py        which operator's bridge a request belongs to (shared skills)
   config.py          bridge configuration
   bridge.py          the daemon that runs on your LAN
 
@@ -106,7 +110,7 @@ skill/             Alexa interaction model and manifest (ASK CLI layout)
 bridge/            config example, systemd unit, installers
 tools/             build, provisioning, and test utilities
 docs/              setup, security, troubleshooting
-tests/             78 tests, no AWS or radio required
+tests/             122 tests, no AWS or radio required
 ```
 
 ## Tests

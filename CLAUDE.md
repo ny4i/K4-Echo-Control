@@ -15,7 +15,7 @@ No packaging (`setup.py`/`pyproject.toml`), no linter config, no CI.
 ## Commands
 
 ```bash
-python3 -m pytest tests -q                    # full suite (78 tests, no AWS/radio needed)
+python3 -m pytest tests -q                    # full suite (122 tests, no AWS/radio needed)
 python3 -m pytest tests/test_lambda.py -q     # one file
 python3 -m pytest tests/test_lambda.py::test_name -q
 
@@ -41,9 +41,10 @@ editing:
 | Module | Lambda | Bridge |
 |---|---|---|
 | `commands.py`, `signing.py`, `alexa.py`, `transports.py` | ✅ | ✅ |
+| `registry.py` | ✅ | ❌ |
 | `radio.py`, `config.py`, `bridge.py` | ❌ | ✅ |
 
-`tools/build_lambda.sh` ships only the four Lambda-side modules
+`tools/build_lambda.sh` ships only the Lambda-side modules
 (`LAMBDA_MODULES` in that script). **Adding a Lambda-side import of `radio.py`,
 `config.py`, or `bridge.py` breaks the deployed zip** — the script's import check
 will catch it, but the fix is to keep that dependency out, not to widen the list.
@@ -61,6 +62,13 @@ will catch it, but the fix is to keep that dependency out, not to widen the list
   together.
 - `K4_SKILL_ID` gates the Lambda; without it any skill that learns the ARN can
   drive the radio.
+- **Shared deployments move a guarantee out of IAM and into code.** With
+  `K4_MULTI_TENANT=1` one skill serves several operators, so the Lambda's policy
+  must cover every bridge's topic and `registry.resolve_thing()` becomes the only
+  thing separating them. It has no default and no fallback by design — an
+  unresolved speaker is refused before a transport is even built, and
+  `tests/test_multi_tenant.py` asserts exactly that. Do not add a fallback.
+  See `docs/SHARED-SKILL.md`.
 
 ### Two transports
 

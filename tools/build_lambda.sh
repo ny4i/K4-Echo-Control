@@ -13,7 +13,7 @@ BUILD="${ROOT}/build/lambda"
 DIST="${ROOT}/dist"
 ZIP="${DIST}/k4-echo-lambda.zip"
 
-LAMBDA_MODULES=(__init__.py alexa.py commands.py signing.py transports.py)
+LAMBDA_MODULES=(__init__.py alexa.py commands.py registry.py signing.py transports.py)
 
 rm -rf "${BUILD}"
 mkdir -p "${BUILD}/k4echo" "${DIST}"

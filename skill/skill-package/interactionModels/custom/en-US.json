@@ -51,6 +51,23 @@
             "is the radio in standby"
           ]
         },
+        {
+          "name": "PairIntent",
+          "slots": [
+            { "name": "code", "type": "AMAZON.NUMBER" }
+          ],
+          "samples": [
+            "pair {code}",
+            "pair with {code}",
+            "pair code {code}",
+            "pair my radio with {code}",
+            "pair my radio using code {code}",
+            "my pairing code is {code}",
+            "my code is {code}",
+            "register {code}",
+            "register my radio with {code}"
+          ]
+        },
         { "name": "AMAZON.HelpIntent", "samples": [] },
         { "name": "AMAZON.StopIntent", "samples": [] },
         { "name": "AMAZON.CancelIntent", "samples": [] },

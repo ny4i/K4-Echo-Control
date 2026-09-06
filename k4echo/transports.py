@@ -217,13 +217,25 @@ class IotTransport:
         )
 
 
-def build_transport(kind: Optional[str] = None):
-    """Instantiate the transport named by ``K4_TRANSPORT`` (default ``iot``)."""
+def build_transport(kind: Optional[str] = None, thing_name: Optional[str] = None):
+    """Instantiate the transport named by ``K4_TRANSPORT`` (default ``iot``).
+
+    ``thing_name`` overrides ``K4_IOT_THING_NAME`` and is how a shared skill
+    aims a command at one operator's bridge rather than at the single radio a
+    private deployment is configured for.  The webhook transport has no
+    equivalent -- it points at one fixed URL -- so naming a thing alongside it
+    is a configuration error rather than something to quietly ignore.
+    """
     selected = (kind or _env("K4_TRANSPORT", "iot")).strip().lower()
 
     if selected == "webhook":
+        if thing_name:
+            raise TransportError(
+                "the webhook transport addresses a single fixed bridge and "
+                "cannot route per operator; use transport 'iot' for a shared skill"
+            )
         return WebhookTransport()
     if selected == "iot":
-        return IotTransport()
+        return IotTransport(thing_name=thing_name)
 
     raise TransportError("unknown transport {!r} (expected 'iot' or 'webhook')".format(selected))

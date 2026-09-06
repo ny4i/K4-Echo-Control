@@ -1,0 +1,46 @@
+{
+  "_comment": [
+    "Execution role for a SHARED deployment -- one skill serving several operators.",
+    "Compare with lambda-iam-policy.json, which names a single thing: this one must",
+    "cover every paired bridge, so the DynamoDB lookup in k4echo/registry.py becomes",
+    "the boundary between operators rather than IAM. Substitute REGION and ACCOUNT.",
+    "The codes table is read-only here; only the pairings table is written."
+  ],
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublishCommandsToAnyPairedBridge",
+      "Effect": "Allow",
+      "Action": "iot:Publish",
+      "Resource": "arn:aws:iot:REGION:ACCOUNT:topic/k4echo/*/cmd"
+    },
+    {
+      "Sid": "ReadAnyPairedRadiosShadow",
+      "Effect": "Allow",
+      "Action": "iot:GetThingShadow",
+      "Resource": "arn:aws:iot:REGION:ACCOUNT:thing/*"
+    },
+    {
+      "Sid": "ResolveAndRecordPairings",
+      "Effect": "Allow",
+      "Action": ["dynamodb:GetItem", "dynamodb:PutItem"],
+      "Resource": "arn:aws:dynamodb:REGION:ACCOUNT:table/k4echo-pairings"
+    },
+    {
+      "Sid": "ReadPairingCodes",
+      "Effect": "Allow",
+      "Action": "dynamodb:GetItem",
+      "Resource": "arn:aws:dynamodb:REGION:ACCOUNT:table/k4echo-codes"
+    },
+    {
+      "Sid": "WriteLogs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:REGION:ACCOUNT:log-group:/aws/lambda/k4-echo-control:*"
+    }
+  ]
+}
