@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — K4 Control</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1b1b1f;
+    --muted: #5c5c66;
+    --rule: #e2e2e8;
+    --accent: #0b5cad;
+    --card: #f5f6f8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16171a;
+      --fg: #e6e6ea;
+      --muted: #a0a0ab;
+      --rule: #2e3036;
+      --accent: #7fb2e8;
+      --card: #1f2126;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2.5rem 1.25rem 4rem;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  main { max-width: 44rem; margin: 0 auto; }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 .35rem; }
+  h2 { font-size: 1.15rem; margin: 2.25rem 0 .6rem; padding-top: 1.1rem; border-top: 1px solid var(--rule); }
+  h2:first-of-type { border-top: none; padding-top: 0; }
+  .date { color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+  .summary {
+    background: var(--card);
+    border-left: 3px solid var(--accent);
+    padding: .9rem 1.1rem;
+    margin: 0 0 2rem;
+    border-radius: 0 4px 4px 0;
+  }
+  .summary p { margin: 0; font-weight: 600; }
+  ul { padding-left: 1.25rem; }
+  li { margin: .35rem 0; }
+  code {
+    background: var(--card);
+    padding: .1rem .35rem;
+    border-radius: 3px;
+    font-size: .9em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  a { color: var(--accent); }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: .88rem;
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <h1>Privacy Policy</h1>
+  <p class="date">K4 Control (Alexa skill) &middot; Effective 6 September 2026</p>
+
+  <div class="summary">
+    <p>This skill collects no personal information about you. There is no data to disclose, sell, or lose.</p>
+  </div>
+
+  <h2>What the skill does</h2>
+  <p>
+    K4 Control lets you switch an Elecraft K4 transceiver on or off, and ask whether it is on,
+    by voice. When you speak a command, Alexa determines which of three intents you meant and
+    passes that intent to a small AWS Lambda function. The function translates it into a single
+    command name — <code>power_on</code>, <code>power_off</code>, or <code>power_query</code> —
+    and relays that name to a bridge program running on the radio's own local network. The bridge
+    is the only component that talks to the radio. Nothing else is transmitted.
+  </p>
+
+  <h2>Information collected</h2>
+  <p>None. Specifically, the skill:</p>
+  <ul>
+    <li>does not ask for, collect, or store your name, email address, postal address, telephone number, or any other personal information;</li>
+    <li>uses no account linking and maintains no user accounts of its own;</li>
+    <li>does not store voice recordings or transcripts of anything you say;</li>
+    <li>does not read your Alexa profile, contacts, calendar, location, or device settings;</li>
+    <li>uses no cookies, advertising identifiers, tracking pixels, or analytics services;</li>
+    <li>does not share, sell, rent, or transfer information to anyone — there is none to share.</li>
+  </ul>
+  <p>
+    As it does for every skill, Alexa includes an anonymous, skill-specific user identifier in each
+    request. K4 Control does not read, use, or retain that identifier.
+  </p>
+
+  <h2>Diagnostic logs</h2>
+  <p>
+    The Lambda function writes brief operational log entries — the type of request received, which
+    of the three commands it mapped to, and an automatically generated request identifier — so that
+    faults can be diagnosed. These entries contain no personal information, are visible only to the
+    operator of this skill, and are used for no other purpose.
+  </p>
+
+  <h2>Amazon's role</h2>
+  <p>
+    Your interaction with Alexa itself — the wake word, voice recordings, and your voice history —
+    is handled by Amazon under Amazon's own privacy notice, not by this skill. You can review and
+    delete that history in the Alexa app or at
+    <a href="https://www.amazon.com/alexaprivacy">amazon.com/alexaprivacy</a>.
+  </p>
+
+  <h2>Children</h2>
+  <p>
+    This skill is not directed to children. It collects no information from anyone, children included.
+  </p>
+
+  <h2>Changes to this policy</h2>
+  <p>
+    Any change will be posted on this page with a new effective date.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Questions about this policy: <a href="mailto:ny4i@ny4i.com">ny4i@ny4i.com</a>
+  </p>
+
+  <footer>
+    K4 Control is an open-source project by NY4I and is not affiliated with, endorsed by, or
+    sponsored by Elecraft, Inc. or Amazon.com, Inc.
+  </footer>
+
+</main>
+</body>
+</html>
